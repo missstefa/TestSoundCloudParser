@@ -6,7 +6,7 @@ use App\Models\Track;
 
 class ParseTrackAction
 {
-    public function execute($track)
+    public function execute($track): void
     {
 
         Track::query()->updateOrCreate([

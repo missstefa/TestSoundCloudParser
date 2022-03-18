@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Weidner\Goutte\GoutteServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -189,7 +189,7 @@ return [
     */
 
     'aliases' => [
-
+        'Goutte' => Weidner\Goutte\GoutteFacade::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

@@ -144,24 +144,22 @@ class ParseSoundCloudTest extends TestCase
           "next_href": "https://api.soundcloud.com/collection?page_size=10&cursor=1234567"
         }';
 
-        Http::fake(['https://api-v2.soundcloud.com/users/lakeyinspired' => Http::response($lakeyinspiredResponse, 200, [])]);
-        Http::fake(['https://api-v2.soundcloud.com/tracks/lakeyinspired' => Http::response($lakeyinspiredTrackResponse, 200, [])]);
+        Http::fake([
+            'https://api-v2.soundcloud.com/users/lakeyinspired' => Http::response($lakeyinspiredResponse, 200, [])
+        ]);
+        Http::fake([
+            'https://api-v2.soundcloud.com/tracks/lakeyinspired' => Http::response($lakeyinspiredTrackResponse, 200, [])
+        ]);
 
         $this->postJson($this->route(), ['url' => "https://soundcloud.com/lakeyinspired"])->assertOk();
-    }
 
-    public function test_it_can_2 (): void
-    {
         $this->assertDatabaseHas(Member::class, [
             'full_name' => 'Full Name',
             'user_name' => 'some.user',
             'city' => 'City',
             'followers_count' => 0
         ]);
-    }
 
-    public function test_it_can_3 (): void
-    {
         $this->assertDatabaseHas(Track::class, [
             'title' => 'Some title',
             'duration' => 40000,
@@ -170,6 +168,15 @@ class ParseSoundCloudTest extends TestCase
         ]);
     }
 
+    public function test_for_check_need_token()
+    {
+        $response = Http::get('https://api-v2.soundcloud.com/tracks');
 
+        $this->assertEquals(401, $response->status());
+
+        $response = Http::get('https://api.soundcloud.com/tracks');
+
+        $this->assertEquals(401, $response->status());
+    }
 
 }

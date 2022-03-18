@@ -15,7 +15,7 @@ class ParseSoundCloudTest extends TestCase
         return action([SoundCloudController::class, 'parseSoundCloud'], $params);
     }
 
-    public function test_it_can_1(): void
+    public function test(): void
     {
         $lakeyinspiredTrackResponse = '{
               "collection": {
